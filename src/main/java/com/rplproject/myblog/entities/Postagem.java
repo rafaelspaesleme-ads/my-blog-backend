@@ -1,6 +1,7 @@
 package com.rplproject.myblog.entities;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "tab_post")
 public class Postagem {
@@ -15,14 +16,16 @@ public class Postagem {
     @Column(columnDefinition = "TEXT")
     private String text;
     private Boolean active;
+    private LocalDateTime datePost;
 
-    public Postagem(Long id, String title, String subTitle, String description, String text, Boolean active) {
+    public Postagem(Long id, String title, String subTitle, String description, String text, Boolean active, LocalDateTime datePost) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
         this.description = description;
         this.text = text;
         this.active = active;
+        this.datePost = datePost;
     }
 
     public Postagem() {
@@ -76,6 +79,14 @@ public class Postagem {
         this.active = active;
     }
 
+    public LocalDateTime getDatePost() {
+        return datePost;
+    }
+
+    public void setDatePost(LocalDateTime datePost) {
+        this.datePost = datePost;
+    }
+
     public static final class PostagemBuilder {
         private Postagem postagem;
 
@@ -114,6 +125,11 @@ public class Postagem {
 
         public PostagemBuilder withActive(Boolean active) {
             postagem.setActive(active);
+            return this;
+        }
+
+        public PostagemBuilder withDatePost(LocalDateTime datePost) {
+            postagem.setDatePost(datePost);
             return this;
         }
 
