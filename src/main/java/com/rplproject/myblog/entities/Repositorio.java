@@ -1,9 +1,8 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "tab_repositories")
@@ -13,9 +12,15 @@ public class Repositorio {
     private Long id;
     private String title;
     private String description;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "repositorio")
     private List<Branch> branches;
     private Long commitsNumber;
     private Long releasesNumber;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "repositorio")
     private List<Colaborador> contributors;
     private String urlRepository;
     private String domainGit;

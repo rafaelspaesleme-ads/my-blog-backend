@@ -2,13 +2,10 @@ package com.rplproject.myblog.entities;
 
 import com.rplproject.myblog.entities.enums.TypeCourses;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity(name = "tab_formation")
+@Entity(name = "tab_formations")
 public class Formacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,16 +14,22 @@ public class Formacao {
     private String institution;
     private LocalDate dateInitial;
     private LocalDate dateFinal;
-    private Long fkPortfolio;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_portfolio")
+    private Portfolio portfolio;
     private Boolean active;
+
+    @Enumerated(EnumType.STRING)
     private TypeCourses typeCourses;
 
-    public Formacao(Long id, String title, String institution, LocalDate dateFinal, Long fkPortfolio, Boolean active, TypeCourses typeCourses) {
+    public Formacao(Long id, String title, String institution, LocalDate dateInitial, LocalDate dateFinal, Portfolio portfolio, Boolean active, TypeCourses typeCourses) {
         this.id = id;
         this.title = title;
         this.institution = institution;
+        this.dateInitial = dateInitial;
         this.dateFinal = dateFinal;
-        this.fkPortfolio = fkPortfolio;
+        this.portfolio = portfolio;
         this.active = active;
         this.typeCourses = typeCourses;
     }
@@ -48,22 +51,6 @@ public class Formacao {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Long getFkPortfolio() {
-        return fkPortfolio;
-    }
-
-    public void setFkPortfolio(Long fkPortfolio) {
-        this.fkPortfolio = fkPortfolio;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public String getInstitution() {
@@ -88,6 +75,22 @@ public class Formacao {
 
     public void setDateFinal(LocalDate dateFinal) {
         this.dateFinal = dateFinal;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public TypeCourses getTypeCourses() {
@@ -134,8 +137,8 @@ public class Formacao {
             return this;
         }
 
-        public FormacaoBuilder withFkPortfolio(Long fkPortfolio) {
-            formacao.setFkPortfolio(fkPortfolio);
+        public FormacaoBuilder withPortfolio(Portfolio portfolio) {
+            formacao.setPortfolio(portfolio);
             return this;
         }
 

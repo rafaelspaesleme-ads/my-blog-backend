@@ -1,25 +1,28 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "tab_tag")
+@Entity(name = "tab_tags")
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tagName;
-    private Long fkForum;
-    private Long fkComentario;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_forum")
+    private Forum forum;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_comentario")
+    private Comentario comentario;
     private Boolean active;
 
-    public Tag(Long id, String tagName, Long fkForum, Long fkComentario, Boolean active) {
+    public Tag(Long id, String tagName, Forum forum, Comentario comentario, Boolean active) {
         this.id = id;
         this.tagName = tagName;
-        this.fkForum = fkForum;
-        this.fkComentario = fkComentario;
+        this.forum = forum;
+        this.comentario = comentario;
         this.active = active;
     }
 
@@ -42,20 +45,20 @@ public class Tag {
         this.tagName = tagName;
     }
 
-    public Long getFkForum() {
-        return fkForum;
+    public Forum getForum() {
+        return forum;
     }
 
-    public void setFkForum(Long fkForum) {
-        this.fkForum = fkForum;
+    public void setForum(Forum forum) {
+        this.forum = forum;
     }
 
-    public Long getFkComentario() {
-        return fkComentario;
+    public Comentario getComentario() {
+        return comentario;
     }
 
-    public void setFkComentario(Long fkComentario) {
-        this.fkComentario = fkComentario;
+    public void setComentario(Comentario comentario) {
+        this.comentario = comentario;
     }
 
     public Boolean getActive() {
@@ -87,13 +90,13 @@ public class Tag {
             return this;
         }
 
-        public TagBuilder withFkForum(Long fkForum) {
-            tag.setFkForum(fkForum);
+        public TagBuilder withForum(Forum forum) {
+            tag.setForum(forum);
             return this;
         }
 
-        public TagBuilder withFkComentario(Long fkComentario) {
-            tag.setFkComentario(fkComentario);
+        public TagBuilder withComentario(Comentario comentario) {
+            tag.setComentario(comentario);
             return this;
         }
 

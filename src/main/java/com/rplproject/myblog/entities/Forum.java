@@ -1,28 +1,39 @@
 package com.rplproject.myblog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Entity(name = "tab_forum")
+@Entity(name = "tab_forums")
 public class Forum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_autor")
     private Seguidor fkSeguidor;
     private String title;
     private String urlImage;
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "forum")
     private List<Tag> tags;
     private Boolean active;
     private LocalDateTime datePublish;
 
-    @OneToMany(mappedBy = "tab_coment", cascade = CascadeType.ALL)
-    private List<Comentario> comentarios;
+    @JsonIgnore
+    @OneToMany(mappedBy = "forum")
+    private List<Comentario> comentario = new ArrayList<>();
 
-    public Forum(Long id, Seguidor fkSeguidor, String title, String urlImage, String description, List<Tag> tags, Boolean active, LocalDateTime datePublish, List<Comentario> comentarios) {
+    public Forum(Long id, Seguidor fkSeguidor, String title, String urlImage, String description, List<Tag> tags, Boolean active, LocalDateTime datePublish) {
         this.id = id;
         this.fkSeguidor = fkSeguidor;
         this.title = title;
@@ -31,7 +42,6 @@ public class Forum {
         this.tags = tags;
         this.active = active;
         this.datePublish = datePublish;
-        this.comentarios = comentarios;
     }
 
     public Forum() {
@@ -86,11 +96,11 @@ public class Forum {
     }
 
     public List<Comentario> getComentarios() {
-        return comentarios;
+        return comentario;
     }
 
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
+    public void setComentarios(List<Comentario> comentario) {
+        this.comentario = comentario;
     }
 
     public Seguidor getFkSeguidor() {
@@ -160,13 +170,26 @@ public class Forum {
             return this;
         }
 
-        public ForumBuilder withComentarios(List<Comentario> comentarios) {
-            forum.setComentarios(comentarios);
+        public ForumBuilder withComentarios(List<Comentario> comentario) {
+            forum.setComentarios(comentario);
             return this;
         }
 
         public Forum build() {
             return forum;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Forum forum = (Forum) o;
+        return id.equals(forum.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

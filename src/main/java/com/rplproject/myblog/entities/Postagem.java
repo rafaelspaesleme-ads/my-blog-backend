@@ -3,7 +3,7 @@ package com.rplproject.myblog.entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "tab_post")
+@Entity(name = "tab_posts")
 public class Postagem {
 
     @Id

@@ -1,11 +1,8 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "tab_social_media")
+@Entity(name = "tab_social_medias")
 public class SocialMedia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +16,12 @@ public class SocialMedia {
     private String urlPodCast;
     private String urlMyBlog;
     private Long fkPortolio;
-    private Long fkFollower;
+
+    @OneToOne(mappedBy = "socialMedia")
+    private Seguidor seguidor;
     private Boolean active;
 
-    public SocialMedia(Long id, String urlGitHub, String urlLinkedIn, String urlTwitter, String urlYouTube, String urlInstagram, String urlMySite, String urlPodCast, String urlMyBlog, Long fkPortolio, Long fkFollower, Boolean active) {
+    public SocialMedia(Long id, String urlGitHub, String urlLinkedIn, String urlTwitter, String urlYouTube, String urlInstagram, String urlMySite, String urlPodCast, String urlMyBlog, Long fkPortolio, Seguidor seguidor, Boolean active) {
         this.id = id;
         this.urlGitHub = urlGitHub;
         this.urlLinkedIn = urlLinkedIn;
@@ -33,7 +32,7 @@ public class SocialMedia {
         this.urlPodCast = urlPodCast;
         this.urlMyBlog = urlMyBlog;
         this.fkPortolio = fkPortolio;
-        this.fkFollower = fkFollower;
+        this.seguidor = seguidor;
         this.active = active;
     }
 
@@ -112,20 +111,20 @@ public class SocialMedia {
         this.urlMyBlog = urlMyBlog;
     }
 
-    public Long getFkFollower() {
-        return fkFollower;
-    }
-
-    public void setFkFollower(Long fkFollower) {
-        this.fkFollower = fkFollower;
-    }
-
     public Long getFkPortolio() {
         return fkPortolio;
     }
 
     public void setFkPortolio(Long fkPortolio) {
         this.fkPortolio = fkPortolio;
+    }
+
+    public Seguidor getSeguidor() {
+        return seguidor;
+    }
+
+    public void setSeguidor(Seguidor seguidor) {
+        this.seguidor = seguidor;
     }
 
     public Boolean getActive() {
@@ -197,8 +196,8 @@ public class SocialMedia {
             return this;
         }
 
-        public SocialMediaBuilder withFkFollower(Long fkFollower) {
-            socialMedia.setFkFollower(fkFollower);
+        public SocialMediaBuilder withSeguidor(Seguidor seguidor) {
+            socialMedia.setSeguidor(seguidor);
             return this;
         }
 

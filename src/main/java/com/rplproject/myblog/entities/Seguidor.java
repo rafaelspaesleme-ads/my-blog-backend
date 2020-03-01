@@ -2,7 +2,7 @@ package com.rplproject.myblog.entities;
 
 import javax.persistence.*;
 
-@Entity(name = "tab_follower")
+@Entity(name = "tab_followers")
 public class Seguidor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,9 +11,15 @@ public class Seguidor {
     private String password;
     private String name;
     private String surname;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_profissao")
     private Profissao profissao;
     private String mail;
     private String whatsApp;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_social_media", referencedColumnName = "id")
     private SocialMedia socialMedia;
     private String urlImageAvatar;
     @Column(columnDefinition = "TEXT")

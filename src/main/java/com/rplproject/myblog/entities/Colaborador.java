@@ -1,23 +1,23 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "tab_contributions")
+@Entity(name = "tab_contributors")
 public class Colaborador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String usernameGit;
-    private Long fkRepository;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_repositorio")
+    private Repositorio repositorio;
     private Boolean active;
 
-    public Colaborador(Long id, String usernameGit, Long fkRepository, Boolean active) {
+    public Colaborador(Long id, String usernameGit, Repositorio repositorio, Boolean active) {
         this.id = id;
         this.usernameGit = usernameGit;
-        this.fkRepository = fkRepository;
+        this.repositorio = repositorio;
         this.active = active;
     }
 
@@ -40,12 +40,12 @@ public class Colaborador {
         this.usernameGit = usernameGit;
     }
 
-    public Long getFkRepository() {
-        return fkRepository;
+    public Repositorio getRepositorio() {
+        return repositorio;
     }
 
-    public void setFkRepository(Long fkRepository) {
-        this.fkRepository = fkRepository;
+    public void setRepositorio(Repositorio repositorio) {
+        this.repositorio = repositorio;
     }
 
     public Boolean getActive() {
@@ -56,33 +56,33 @@ public class Colaborador {
         this.active = active;
     }
 
-    public static final class ColaboradoresBuilder {
+    public static final class ColaboradorBuilder {
         private Colaborador colaborador;
 
-        private ColaboradoresBuilder() {
+        private ColaboradorBuilder() {
             colaborador = new Colaborador();
         }
 
-        public static ColaboradoresBuilder aColaboradores() {
-            return new ColaboradoresBuilder();
+        public static ColaboradorBuilder aColaborador() {
+            return new ColaboradorBuilder();
         }
 
-        public ColaboradoresBuilder withId(Long id) {
+        public ColaboradorBuilder withId(Long id) {
             colaborador.setId(id);
             return this;
         }
 
-        public ColaboradoresBuilder withUsernameGit(String usernameGit) {
+        public ColaboradorBuilder withUsernameGit(String usernameGit) {
             colaborador.setUsernameGit(usernameGit);
             return this;
         }
 
-        public ColaboradoresBuilder withFkRepository(Long fkRepository) {
-            colaborador.setFkRepository(fkRepository);
+        public ColaboradorBuilder withRepositorio(Repositorio repositorio) {
+            colaborador.setRepositorio(repositorio);
             return this;
         }
 
-        public ColaboradoresBuilder withActive(Boolean active) {
+        public ColaboradorBuilder withActive(Boolean active) {
             colaborador.setActive(active);
             return this;
         }

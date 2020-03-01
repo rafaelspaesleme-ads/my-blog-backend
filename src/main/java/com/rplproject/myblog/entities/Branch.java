@@ -1,23 +1,23 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "tab_branch")
+@Entity(name = "tab_branches")
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String fkRepository;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_repositorio")
+    private Repositorio repositorio;
     private Boolean active;
 
-    public Branch(Long id, String name, String fkRepository, Boolean active) {
+    public Branch(Long id, String name, Repositorio repositorio, Boolean active) {
         this.id = id;
         this.name = name;
-        this.fkRepository = fkRepository;
+        this.repositorio = repositorio;
         this.active = active;
     }
 
@@ -40,12 +40,12 @@ public class Branch {
         this.name = name;
     }
 
-    public String getFkRepository() {
-        return fkRepository;
+    public Repositorio getRepositorio() {
+        return repositorio;
     }
 
-    public void setFkRepository(String fkRepository) {
-        this.fkRepository = fkRepository;
+    public void setRepositorio(Repositorio repositorio) {
+        this.repositorio = repositorio;
     }
 
     public Boolean getActive() {
@@ -56,33 +56,33 @@ public class Branch {
         this.active = active;
     }
 
-    public static final class BranchsBuilder {
+    public static final class BranchBuilder {
         private Branch branch;
 
-        private BranchsBuilder() {
+        private BranchBuilder() {
             branch = new Branch();
         }
 
-        public static BranchsBuilder aBranchs() {
-            return new BranchsBuilder();
+        public static BranchBuilder aBranch() {
+            return new BranchBuilder();
         }
 
-        public BranchsBuilder withId(Long id) {
+        public BranchBuilder withId(Long id) {
             branch.setId(id);
             return this;
         }
 
-        public BranchsBuilder withName(String name) {
+        public BranchBuilder withName(String name) {
             branch.setName(name);
             return this;
         }
 
-        public BranchsBuilder withFkRepository(String fkRepository) {
-            branch.setFkRepository(fkRepository);
+        public BranchBuilder withRepositorio(Repositorio repositorio) {
+            branch.setRepositorio(repositorio);
             return this;
         }
 
-        public BranchsBuilder withActive(Boolean active) {
+        public BranchBuilder withActive(Boolean active) {
             branch.setActive(active);
             return this;
         }

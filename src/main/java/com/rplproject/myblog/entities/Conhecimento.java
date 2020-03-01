@@ -1,11 +1,8 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "tab_learning")
+@Entity(name = "tab_learnings")
 public class Conhecimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,14 +10,17 @@ public class Conhecimento {
     private String title;
     private Integer level;
     private Boolean active;
-    private Long fkPortfolio;
 
-    public Conhecimento(Long id, String title, Integer level, Boolean active, Long fkPortfolio) {
+    @ManyToOne
+    @JoinColumn(name = "fk_portfolio")
+    private Portfolio portfolio;
+
+    public Conhecimento(Long id, String title, Integer level, Boolean active, Portfolio portfolio) {
         this.id = id;
         this.title = title;
         this.level = level;
         this.active = active;
-        this.fkPortfolio = fkPortfolio;
+        this.portfolio = portfolio;
     }
 
     public Conhecimento() {
@@ -58,12 +58,12 @@ public class Conhecimento {
         this.active = active;
     }
 
-    public Long getFkPortfolio() {
-        return fkPortfolio;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setFkPortfolio(Long fkPortfolio) {
-        this.fkPortfolio = fkPortfolio;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     public static final class ConhecimentoBuilder {
@@ -97,8 +97,8 @@ public class Conhecimento {
             return this;
         }
 
-        public ConhecimentoBuilder withFkPortfolio(Long fkPortfolio) {
-            conhecimento.setFkPortfolio(fkPortfolio);
+        public ConhecimentoBuilder withPortfolio(Portfolio portfolio) {
+            conhecimento.setPortfolio(portfolio);
             return this;
         }
 

@@ -1,15 +1,20 @@
 package com.rplproject.myblog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name = "tab_coment")
+@Entity(name = "tab_comments")
 public class Comentario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_seguidor")
     private Seguidor fkSeguidor;
 
     @ManyToOne
@@ -19,6 +24,9 @@ public class Comentario {
     @Column(columnDefinition = "TEXT")
     private String description;
     private String urlImage;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "comentario")
     private List<Tag> tags;
     private Boolean active;
     private LocalDateTime datePublish;

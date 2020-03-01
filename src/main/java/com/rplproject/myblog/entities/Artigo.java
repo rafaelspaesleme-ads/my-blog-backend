@@ -2,7 +2,7 @@ package com.rplproject.myblog.entities;
 
 import javax.persistence.*;
 
-@Entity(name = "tab_article")
+@Entity(name = "tab_articles")
 public class Artigo {
 
     @Id

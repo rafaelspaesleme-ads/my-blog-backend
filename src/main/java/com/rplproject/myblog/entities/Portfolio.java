@@ -1,12 +1,11 @@
 package com.rplproject.myblog.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "tab_portfolio")
+@Entity(name = "tab_portfolios")
 public class Portfolio {
 
     @Id
@@ -20,13 +19,21 @@ public class Portfolio {
     private String whatsApp;
     private String mail;
     private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_social_media")
     private SocialMedia socialMedia;
-    private List<Formacao> formations;
-    private List<Formacao> courses;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "portfolio")
+    private List<Formacao> formationsOrCourses;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "portfolio")
     private List<Conhecimento> learnings;
     private Boolean active;
 
-    public Portfolio(Long id, String urlImage, String title, String subTitle, String job, String whatsApp, String mail, String phone, SocialMedia socialMedia, List<Formacao> formations, List<Formacao> courses, List<Conhecimento> learnings, Boolean active) {
+    public Portfolio(Long id, String urlImage, String title, String subTitle, String job, String whatsApp, String mail, String phone, SocialMedia socialMedia, List<Formacao> formationsOrCourses, List<Conhecimento> learnings, Boolean active) {
         this.id = id;
         this.urlImage = urlImage;
         this.title = title;
@@ -36,8 +43,7 @@ public class Portfolio {
         this.mail = mail;
         this.phone = phone;
         this.socialMedia = socialMedia;
-        this.formations = formations;
-        this.courses = courses;
+        this.formationsOrCourses = formationsOrCourses;
         this.learnings = learnings;
         this.active = active;
     }
@@ -85,11 +91,11 @@ public class Portfolio {
         this.job = job;
     }
 
-    public String getUrlWhatsApp() {
+    public String getWhatsApp() {
         return whatsApp;
     }
 
-    public void setUrlWhatsApp(String whatsApp) {
+    public void setWhatsApp(String whatsApp) {
         this.whatsApp = whatsApp;
     }
 
@@ -117,27 +123,19 @@ public class Portfolio {
         this.socialMedia = socialMedia;
     }
 
-    public List<Formacao> getFormations() {
-        return formations;
+    public List<Formacao> getFormationsOrCourses() {
+        return formationsOrCourses;
     }
 
-    public void setFormations(List<Formacao> formations) {
-        this.formations = formations;
+    public void setFormationsOrCourses(List<Formacao> formationsOrCourses) {
+        this.formationsOrCourses = formationsOrCourses;
     }
 
-    public List<Formacao> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Formacao> courses) {
-        this.courses = courses;
-    }
-
-    public List<Conhecimento> getLearning() {
+    public List<Conhecimento> getLearnings() {
         return learnings;
     }
 
-    public void setLearning(List<Conhecimento> learnings) {
+    public void setLearnings(List<Conhecimento> learnings) {
         this.learnings = learnings;
     }
 
@@ -185,8 +183,8 @@ public class Portfolio {
             return this;
         }
 
-        public PortfolioBuilder withUrlWhatsApp(String whatsApp) {
-            portfolio.setUrlWhatsApp(whatsApp);
+        public PortfolioBuilder withWhatsApp(String whatsApp) {
+            portfolio.setWhatsApp(whatsApp);
             return this;
         }
 
@@ -205,18 +203,13 @@ public class Portfolio {
             return this;
         }
 
-        public PortfolioBuilder withFormations(List<Formacao> formations) {
-            portfolio.setFormations(formations);
+        public PortfolioBuilder withFormationsOrCourses(List<Formacao> formationsOrCourses) {
+            portfolio.setFormationsOrCourses(formationsOrCourses);
             return this;
         }
 
-        public PortfolioBuilder withCourses(List<Formacao> courses) {
-            portfolio.setCourses(courses);
-            return this;
-        }
-
-        public PortfolioBuilder withLearning(List<Conhecimento> learnings) {
-            portfolio.setLearning(learnings);
+        public PortfolioBuilder withLearnings(List<Conhecimento> learnings) {
+            portfolio.setLearnings(learnings);
             return this;
         }
 
