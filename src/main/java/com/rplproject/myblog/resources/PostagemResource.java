@@ -31,7 +31,7 @@ public class PostagemResource {
     }
 
     @CrossOrigin
-    @GetMapping(value = "buscar/ativo/{active}", params = {"page", "size", "orderBy", "direction"})
+    @GetMapping(value = "buscar/ativo/{active}")
     public ResponseEntity<Page<PostagemDTO>> findByActive(@Valid
                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
                                                     @RequestParam(value = "size", defaultValue = "20") Integer linesPerPage,
