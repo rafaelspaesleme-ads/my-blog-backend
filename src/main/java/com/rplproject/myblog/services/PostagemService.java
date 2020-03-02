@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class PostagemService {
     protected Postagem buildPostagem(PostagemDTO postagemDTO){
         return Postagem.PostagemBuilder.aPostagem()
                 .withActive(postagemDTO.getActive())
-                .withDatePost(postagemDTO.getDatePost())
+                .withDatePost(LocalDateTime.now())
                 .withDescription(postagemDTO.getDescription())
                 .withId(postagemDTO.getId())
                 .withSubTitle(postagemDTO.getSubTitle())
