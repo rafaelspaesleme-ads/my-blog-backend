@@ -1,5 +1,6 @@
 package com.rplproject.myblog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rplproject.myblog.entities.enums.TypeCourses;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Formacao {
     private LocalDate dateInitial;
     private LocalDate dateFinal;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_portfolio")
     private Portfolio portfolio;

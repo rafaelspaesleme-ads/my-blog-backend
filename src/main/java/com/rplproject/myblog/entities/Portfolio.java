@@ -3,6 +3,7 @@ package com.rplproject.myblog.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "tab_portfolios")
@@ -20,6 +21,7 @@ public class Portfolio {
     private String mail;
     private String phone;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_social_media")
     private SocialMedia socialMedia;
@@ -32,8 +34,9 @@ public class Portfolio {
     @OneToMany(mappedBy = "portfolio")
     private List<Conhecimento> learnings;
     private Boolean active;
+    private LocalDateTime datePost;
 
-    public Portfolio(Long id, String urlImage, String title, String subTitle, String job, String whatsApp, String mail, String phone, SocialMedia socialMedia, List<Formacao> formationsOrCourses, List<Conhecimento> learnings, Boolean active) {
+    public Portfolio(Long id, String urlImage, String title, String subTitle, String job, String whatsApp, String mail, String phone, SocialMedia socialMedia, List<Formacao> formationsOrCourses, List<Conhecimento> learnings, Boolean active, LocalDateTime datePost) {
         this.id = id;
         this.urlImage = urlImage;
         this.title = title;
@@ -46,6 +49,7 @@ public class Portfolio {
         this.formationsOrCourses = formationsOrCourses;
         this.learnings = learnings;
         this.active = active;
+        this.datePost = datePost;
     }
 
     public Portfolio() {
@@ -147,6 +151,14 @@ public class Portfolio {
         this.active = active;
     }
 
+    public LocalDateTime getDatePost() {
+        return datePost;
+    }
+
+    public void setDatePost(LocalDateTime datePost) {
+        this.datePost = datePost;
+    }
+
     public static final class PortfolioBuilder {
         private Portfolio portfolio;
 
@@ -215,6 +227,11 @@ public class Portfolio {
 
         public PortfolioBuilder withActive(Boolean active) {
             portfolio.setActive(active);
+            return this;
+        }
+
+        public PortfolioBuilder withDatePost(LocalDateTime datePost) {
+            portfolio.setDatePost(datePost);
             return this;
         }
 

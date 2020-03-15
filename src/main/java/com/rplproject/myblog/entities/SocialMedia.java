@@ -1,5 +1,7 @@
 package com.rplproject.myblog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "tab_social_medias")
@@ -17,6 +19,7 @@ public class SocialMedia {
     private String urlMyBlog;
     private Long fkPortolio;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "socialMedia")
     private Seguidor seguidor;
     private Boolean active;

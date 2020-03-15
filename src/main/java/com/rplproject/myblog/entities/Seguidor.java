@@ -1,5 +1,7 @@
 package com.rplproject.myblog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "tab_followers")
@@ -12,12 +14,14 @@ public class Seguidor {
     private String name;
     private String surname;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_profissao")
     private Profissao profissao;
     private String mail;
     private String whatsApp;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_social_media", referencedColumnName = "id")
     private SocialMedia socialMedia;

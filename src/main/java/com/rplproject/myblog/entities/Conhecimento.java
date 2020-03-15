@@ -1,5 +1,7 @@
 package com.rplproject.myblog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "tab_learnings")
@@ -11,6 +13,7 @@ public class Conhecimento {
     private Integer level;
     private Boolean active;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "fk_portfolio")
     private Portfolio portfolio;
