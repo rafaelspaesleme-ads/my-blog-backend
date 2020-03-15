@@ -1,6 +1,5 @@
 package com.rplproject.myblog.dto;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class PostagemDTO {
