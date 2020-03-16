@@ -3,6 +3,7 @@ package com.rplproject.myblog.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "tab_repositories")
@@ -27,8 +28,9 @@ public class Repositorio {
     private Boolean active;
     private String usernameGit;
     private String programmingLanguage;
+    private LocalDateTime datePost;
 
-    public Repositorio(Long id, String title, String description, List<Branch> branches, Long commitsNumber, Long releasesNumber, List<Colaborador> contributors, String urlRepository, String domainGit, Boolean active, String usernameGit, String programmingLanguage) {
+    public Repositorio(Long id, String title, String description, List<Branch> branches, Long commitsNumber, Long releasesNumber, List<Colaborador> contributors, String urlRepository, String domainGit, Boolean active, String usernameGit, String programmingLanguage, LocalDateTime datePost) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -41,6 +43,7 @@ public class Repositorio {
         this.active = active;
         this.usernameGit = usernameGit;
         this.programmingLanguage = programmingLanguage;
+        this.datePost = datePost;
     }
 
     public Repositorio() {
@@ -142,6 +145,14 @@ public class Repositorio {
         this.programmingLanguage = programmingLanguage;
     }
 
+    public LocalDateTime getDatePost() {
+        return datePost;
+    }
+
+    public void setDatePost(LocalDateTime datePost) {
+        this.datePost = datePost;
+    }
+
     public static final class RepositorioBuilder {
         private Repositorio repositorio;
 
@@ -210,6 +221,11 @@ public class Repositorio {
 
         public RepositorioBuilder withProgrammingLanguage(String programmingLanguage) {
             repositorio.setProgrammingLanguage(programmingLanguage);
+            return this;
+        }
+
+        public RepositorioBuilder withDatePost(LocalDateTime datePost) {
+            repositorio.setDatePost(datePost);
             return this;
         }
 
