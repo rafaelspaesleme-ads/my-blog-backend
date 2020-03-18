@@ -52,6 +52,10 @@ public class ArtigoService {
     }
 
     public List<ArtigoDTO> findAll() {
+        return find();
+    }
+
+    protected List<ArtigoDTO> find() {
         List<Artigo> artigos = artigoRepository.findAll();
         List<ArtigoDTO> artigoDTOS = new ArrayList<>();
         artigos.forEach(artigo -> artigoDTOS.add(buildArtigoDTO(artigo)));
