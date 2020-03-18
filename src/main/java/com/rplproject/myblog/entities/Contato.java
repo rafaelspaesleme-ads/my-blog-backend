@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity(name = "tab_contacts")
 public class Contato {
@@ -15,15 +16,7 @@ public class Contato {
     private String nameSemanticIcon;
     private String typeContact;
     private Boolean active;
-
-    public Contato(Long id, String title, String address, String nameSemanticIcon, String typeContact, Boolean active) {
-        this.id = id;
-        this.title = title;
-        this.address = address;
-        this.nameSemanticIcon = nameSemanticIcon;
-        this.typeContact = typeContact;
-        this.active = active;
-    }
+    private LocalDateTime datePost;
 
     public Contato() {
     }
@@ -76,6 +69,14 @@ public class Contato {
         this.active = active;
     }
 
+    public LocalDateTime getDatePost() {
+        return datePost;
+    }
+
+    public void setDatePost(LocalDateTime datePost) {
+        this.datePost = datePost;
+    }
+
     public static final class ContatoBuilder {
         private Contato contato;
 
@@ -114,6 +115,11 @@ public class Contato {
 
         public ContatoBuilder withActive(Boolean active) {
             contato.setActive(active);
+            return this;
+        }
+
+        public ContatoBuilder withDatePost(LocalDateTime datePost) {
+            contato.setDatePost(datePost);
             return this;
         }
 
