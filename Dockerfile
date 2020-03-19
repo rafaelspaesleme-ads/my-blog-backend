@@ -9,6 +9,8 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar /app/app.jar
+COPY target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar app.jar
+
+COPY app.jar /app
 
 CMD ["java","-jar","app.jar"]

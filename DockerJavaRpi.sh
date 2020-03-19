@@ -16,18 +16,14 @@ echo '+========================================================+'
 echo 'Atualizando pacotes... . . .  .  .  .    .    .'
 git pull origin develop
 
-echo 'Digite o nome do seu projeto: '
-read nameContainerDocker
-
-echo 'Digite a versão do seu projeto: '
-read versionProject
+echo ''
+echo 'Configurando Dockerfile'
+echo ''
 
 echo 'Digite a imagem docker RPI java para esse projeto: '
 read imageDocker
 
 imageDockerPostgre="tobi312/rpi-postgresql:9.6"
-
-echo 'Configurando Dockerfile'
 
 if [[ "$(docker images -q ${imageDocker} 2> /dev/null)" == "" ]]; then
   docker pull ${imageDocker}
@@ -39,25 +35,18 @@ read usernameDocker
 echo 'Digite seu email: '
 read mailDocker
 
-IMAGE_DOCKER=${imageDocker}
-USERNAME_DOCKER=${usernameDocker}
-MAIL_DOCKER=${mailDocker}
-NAME_PROJECT_JAVA=${nameContainerDocker}
-VERSION_PROJECT_JAVA=${versionProject}
-
-sed -e "s|IMAGE_DOCKER|$IMAGE_DOCKER|" -i Dockerfile
-sed -e "s|USERNAME_DOCKER|$USERNAME_DOCKER|" -i Dockerfile
-sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i Dockerfile
-sed -e "s|NAME_PROJECT_JAVA|$NAME_PROJECT_JAVA|" -i Dockerfile
-sed -e "s|VERSION_PROJECT_JAVA|$VERSION_PROJECT_JAVA|" -i Dockerfile
-
 echo 'Configurando projeto'
 echo ''
+
+echo 'Digite o nome do seu projeto: '
+read nameContainerDocker
+
+echo 'Digite a versão do seu projeto: '
+read versionProject
 
 echo 'Qual o profile do seu projeto será utilizado?'
 echo 'Ex.: "prd" (Produção) - "dev" (Desenvolvimento) - "test" (Testes) - outros'
 read typeProfileProperties
-
 
 echo 'Digite a porta do seu projeto: '
 read portJProject
@@ -80,45 +69,47 @@ read hostDatabase
 echo 'Digite a porta do banco de dados: '
 read portDatabase
 
-docker run -t --restart unless-stopped --name ${nameDatabase} -d -p ${portDatabase}:5432 -v /home/pi/.local/share/postgresql:/var/lib/postgresql/data -e POSTGRES_PASSWORD=${passDatabase} ${imageDockerPostgre}
+IMAGE_APP=${imageDocker}
+USERNAME_DOCKER=${usernameDocker}
+MAIL_DOCKER=${mailDocker}
+NAME_PROJECT_JAVA=${nameContainerDocker}
+VERSION_PROJECT_JAVA=${versionProject}
 
 PROFILE_ACTIVE=${typeProfileProperties}
+IMAGE_POSTGRES=${imageDockerPostgre}
+PORT_JPROJECT=${portJProject}
+
 NAME_DATABASE=${nameDatabase}
 USER_DATABASE=${userDatabase}
 PASS_DATABASE=${passDatabase}
 HOST_DATABASE=${hostDatabase}
 PORT_DATABASE=${portDatabase}
-PORT_JPROJECT=${portJProject}
+
+TYPE_PROFILE_SPRING=${typeProfileProperties}
+
+sed -e "s|NAME_PROJECT_JAVA|$NAME_PROJECT_JAVA|" -i docker-compose.yml
+
+sed -e "s|IMAGE_APP|$IMAGE_APP|" -i Dockerfile
+sed -e "s|USERNAME_DOCKER|$USERNAME_DOCKER|" -i Dockerfile
+sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i Dockerfile
+sed -e "s|NAME_PROJECT_JAVA|$NAME_PROJECT_JAVA|" -i Dockerfile
+sed -e "s|VERSION_PROJECT_JAVA|$VERSION_PROJECT_JAVA|" -i Dockerfile
 
 sed -e "s|dev|$PROFILE_ACTIVE|" -i src/main/resources/application.properties
+sed -e "s|IMAGE_POSTGRES|$IMAGE_POSTGRES|" -i docker-compose.yml
+sed -e "s|PORT_JPROJECT|$PORT_JPROJECT|" -i docker-compose.yml
+
+sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i docker-compose.yml
+sed -e "s|USER_DATABASE|$USER_DATABASE|" -i docker-compose.yml
+sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i docker-compose.yml
+sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i docker-compose.yml
+
 sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|HOST_DATABASE|$HOST_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 
-echo 'Criando tabelas do banco de dados... . . .  .  .  .    .'
+sed -e "s|TYPE_PROFILE_SPRING|$TYPE_PROFILE_SPRING|" -i entrypoint.sh
 
-mvn clean install
-
-sed -e "s|create|nome|" -i src/main/resources/application-${typeProfileProperties}.properties
-
-
-if [ ${typeProfileProperties} != "test" ]
-then
-    mvn clean install -Dmaven.test.skip=true
-else
-    mvn clean install
-fi
-
-newImageDocker="img-rpi-${nameContainerDocker}"
-
-docker build -t "img-rpi-${nameContainerDocker}" .
-
-docker run -t --restart unless-stopped -d --name ${nameContainerDocker} -p ${portJProject}:8080 "img-rpi-${nameContainerDocker}"
-
-docker ps
-
-IP_SERVER_RPI=$(hostname -I | awk '{print $1}')
-
-echo 'Acesse http://${IP_SERVER_RPI}:${portJProject}'
+docker-compose up -d

@@ -1,0 +1,36 @@
+version: "3"
+services:
+  # DB*******************************************
+  postgres:
+    image: IMAGE_POSTGRES
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - PORT_DATABASE
+    ports:
+      - PORT_DATABASE:5432
+    environment:
+      - POSTGRES_PASSWORD=PASS_DATABASE
+      - POSTGRES_USER=USER_DATABASE
+      - POSTGRES_DB=NAME_DATABASE
+    restart: unless-stopped
+  # APP*****************************************
+  springbootapp:
+    entrypoint: /bin/bash
+    command: entrypoint.sh
+    image: .
+    network_mode: bridge
+    container_name: NAME_PROJECT_JAVA
+    expose:
+      - PORT_JPROJECT
+    ports:
+      - PORT_JPROJECT:8080
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+volumes:
+  postgres-data:
