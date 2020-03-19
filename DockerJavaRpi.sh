@@ -99,7 +99,7 @@ sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typ
 
 echo 'Criando tabelas do banco de dados... . . .  .  .  .    .'
 
-mvn clean install -Dmaven.test.skip=true
+mvn clean install
 
 sed -e "s|create|nome|" -i src/main/resources/application-${typeProfileProperties}.properties
 
