@@ -70,6 +70,7 @@ read portDatabase
 
 docker run -t --restart unless-stopped --name ${nameDatabase} -d -p ${portDatabase}:5432 -v /home/pi/.local/share/postgresql:/var/lib/postgresql/data -e POSTGRES_PASSWORD=${passDatabase} ${imageDockerPostgre}
 
+PROFILE_ACTIVE=${typeProfileProperties}
 NAME_DATABASE=${nameDatabase}
 USER_DATABASE=${userDatabase}
 PASS_DATABASE=${passDatabase}
@@ -77,6 +78,7 @@ HOST_DATABASE=${hostDatabase}
 PORT_DATABASE=${portDatabase}
 PORT_JPROJECT=${portJProject}
 
+sed -e "s|dev|$PROFILE_ACTIVE|" -i src/main/resources/application.properties
 sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
