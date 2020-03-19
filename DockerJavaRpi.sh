@@ -84,6 +84,8 @@ sed -e "s|HOST_DATABASE|$HOST_DATABASE|" -i src/main/resources/application-${typ
 sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|9999|$PORT_JPROJECT|" -i src/main/resources/application-${typeProfileProperties}.properties
 
+echo 'Criando tabelas do banco de dados... . . .  .  .  .    .'
+
 mvn clean install -Dmaven.test.skip=true
 
 sed -e "s|create|nome|" -i src/main/resources/application-${typeProfileProperties}.properties
