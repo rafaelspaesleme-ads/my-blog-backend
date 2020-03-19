@@ -13,10 +13,11 @@ echo '========-   CRIANDO DOCKERFILE SPRING BOOT RPI   -========'
 echo '=====                                               == ==='
 echo '+========================================================+'
 
-echo 'Dê um nome para a imagem Docker do seu projeto: '
-read nameImageDocker
+echo 'Digite o nome do seu projeto: '
+read nameContainerDocker
 
 imageDocker="hypriot/rpi-java";
+imageDockerPostgre="tobi312/rpi-postgresql:9.6"
 
 echo 'Configurando Dockerfile'
 
@@ -41,9 +42,13 @@ sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i ./Dockerfile
 echo 'Configurando projeto'
 echo ''
 
-echo 'Qual a profile do seu projeto será utilizado?'
+echo 'Qual o profile do seu projeto será utilizado?'
 echo 'Ex.: "prd" (Produção) - "dev" (Desenvolvimento) - "test" (Testes) - outros'
 read typeProfileProperties
+
+
+echo 'Digite a porta do seu projeto: '
+read portJProject
 
 echo 'Configurando o banco de dados'
 echo ''
@@ -63,25 +68,40 @@ read hostDatabase
 echo 'Digite a porta do banco de dados: '
 read portDatabase
 
+docker run -t --restart unless-stopped --name ${nameDatabase} -d -p ${portDatabase}:5432 -v /home/pi/.local/share/postgresql:/var/lib/postgresql/data -e POSTGRES_PASSWORD=${passDatabase} ${imageDockerPostgre}
+
 NAME_DATABASE=${nameDatabase}
 USER_DATABASE=${userDatabase}
 PASS_DATABASE=${passDatabase}
 HOST_DATABASE=${hostDatabase}
 PORT_DATABASE=${portDatabase}
+PORT_JPROJECT=${portJProject}
 
 sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|HOST_DATABASE|$HOST_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
+sed -e "s|9999|$PORT_JPROJECT|" -i src/main/resources/application-${typeProfileProperties}.properties
+
+mvn clean install -Dmaven.test.skip=true
+
+sed -e "s|create|nome|" -i src/main/resources/application-${typeProfileProperties}.properties
+
 
 if [ ${typeProfileProperties} != "test" ]
 then
-    mvn clean install
-    mvn package -Dmaven.test.skip=true
+    mvn clean install -Dmaven.test.skip=true
 else
     mvn clean install
-    mvn package
 fi
 
-docker build -t ${nameImageDocker} .
+docker build -t "img-rpi-${nameContainerDocker}" .
+
+docker run -it -d --name ${nameContainerDocker} -p ${portJProject}:8080 "img-rpi-${nameContainerDocker}"
+
+docker ps
+
+IP_SERVER_RPI=$(hostname -I | awk '{print $1}')
+
+echo 'Acesse http://${IP_SERVER_RPI}:${portJProject}'
