@@ -40,9 +40,9 @@ IMAGE_DOCKER=${imageDocker}
 USERNAME_DOCKER=${usernameDocker}
 MAIL_DOCKER=${mailDocker}
 
-sed -e "s|IMAGE_DOCKER|$IMAGE_DOCKER|" -i ./Dockerfile
-sed -e "s|USERNAME_DOCKER|$USERNAME_DOCKER|" -i ./Dockerfile
-sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i ./Dockerfile
+sed -e "s|IMAGE_DOCKER|$IMAGE_DOCKER|" -i Dockerfile
+sed -e "s|USERNAME_DOCKER|$USERNAME_DOCKER|" -i Dockerfile
+sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i Dockerfile
 
 echo 'Configurando projeto'
 echo ''
