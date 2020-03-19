@@ -96,7 +96,6 @@ sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typ
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|HOST_DATABASE|$HOST_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
-sed -e "s|9999|$PORT_JPROJECT|" -i src/main/resources/application-${typeProfileProperties}.properties
 
 echo 'Criando tabelas do banco de dados... . . .  .  .  .    .'
 
