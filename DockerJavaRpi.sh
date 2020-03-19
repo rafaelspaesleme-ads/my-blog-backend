@@ -19,6 +19,9 @@ git pull origin develop
 echo 'Digite o nome do seu projeto: '
 read nameContainerDocker
 
+echo 'Digite a versão do seu projeto: '
+read versionProject
+
 echo 'Digite a imagem docker RPI java para esse projeto: '
 read imageDocker
 
@@ -39,10 +42,14 @@ read mailDocker
 IMAGE_DOCKER=${imageDocker}
 USERNAME_DOCKER=${usernameDocker}
 MAIL_DOCKER=${mailDocker}
+NAME_PROJECT_JAVA=${nameContainerDocker}
+VERSION_PROJECT=${versionProject}
 
 sed -e "s|IMAGE_DOCKER|$IMAGE_DOCKER|" -i Dockerfile
 sed -e "s|USERNAME_DOCKER|$USERNAME_DOCKER|" -i Dockerfile
 sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i Dockerfile
+sed -e "s|NAME_PROJECT_JAVA|$NAME_PROJECT_JAVA|" -i Dockerfile
+sed -e "s|VERSION_PROJECT|$VERSION_PROJECT|" -i Dockerfile
 
 echo 'Configurando projeto'
 echo ''
