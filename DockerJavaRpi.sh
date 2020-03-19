@@ -13,6 +13,9 @@ echo '========-   CRIANDO DOCKERFILE SPRING BOOT RPI   -========'
 echo '=====                                               == ==='
 echo '+========================================================+'
 
+echo 'Atualizando pacotes... . . .  .  .  .    .    .'
+git pull origin develop
+
 echo 'Digite o nome do seu projeto: '
 read nameContainerDocker
 
@@ -102,7 +105,7 @@ fi
 
 docker build -t "img-rpi-${nameContainerDocker}" .
 
-docker run -it -d --name ${nameContainerDocker} -p ${portJProject}:8080 "img-rpi-${nameContainerDocker}"
+docker run -t --restart unless-stopped -d --name ${nameContainerDocker} -p ${portJProject}:8080 "img-rpi-${nameContainerDocker}"
 
 docker ps
 
