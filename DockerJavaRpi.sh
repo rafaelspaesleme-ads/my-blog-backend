@@ -19,13 +19,15 @@ git pull origin develop
 echo 'Digite o nome do seu projeto: '
 read nameContainerDocker
 
-imageDocker="hypriot/rpi-java";
+echo 'Digite a imagem docker RPI java para esse projeto: '
+read imageDocker
+
 imageDockerPostgre="tobi312/rpi-postgresql:9.6"
 
 echo 'Configurando Dockerfile'
 
 if [[ "$(docker images -q ${imageDocker} 2> /dev/null)" == "" ]]; then
-  docker pull hypriot/rpi-java
+  docker pull ${imageDocker}
 fi
 
 echo 'Digite seu username Docker: '
