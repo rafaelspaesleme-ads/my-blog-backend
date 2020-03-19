@@ -105,6 +105,8 @@ else
     mvn clean install
 fi
 
+newImageDocker="img-rpi-${nameContainerDocker}"
+
 docker build -t "img-rpi-${nameContainerDocker}" .
 
 docker run -t --restart unless-stopped -d --name ${nameContainerDocker} -p ${portJProject}:8080 "img-rpi-${nameContainerDocker}"
