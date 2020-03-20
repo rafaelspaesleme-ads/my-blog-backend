@@ -13,12 +13,12 @@ services:
     restart: unless-stopped
     volumes:
       - "postgres-data:/var/lib/postgresql/data"
-  springbootapp:
+  app:
+    entrypoint: /bin/bash
     command: entrypoint.sh
     container_name: NAME_PROJECT_JAVA
     depends_on:
       - postgres
-    entrypoint: /bin/bash
     expose:
       - 99999
     image: "."
