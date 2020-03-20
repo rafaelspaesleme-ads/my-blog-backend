@@ -17,8 +17,6 @@ RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["/bin/bash", "-c", "entrypoint.sh"]
 
-COPY target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar app.jar
+COPY target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar /javacle
 
-COPY app.jar /java
-
-CMD ["java","-jar","java/app.jar"]
+CMD ["java","-jar","java/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar"]

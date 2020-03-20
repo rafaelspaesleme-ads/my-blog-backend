@@ -108,6 +108,8 @@ sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typ
 
 sed -e "s|TYPE_PROFILE_SPRING|$TYPE_PROFILE_SPRING|" -i entrypoint.sh
 
+mvn clean install -Dmaven.test.skip=true
+
 cat docker-compose.yml
 
 echo 'Aperte enter para continuar: '
