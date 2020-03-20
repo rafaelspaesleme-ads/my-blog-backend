@@ -1,6 +1,6 @@
 ---
 services:
-  postgres:
+  db:
     container_name: NAME_DATABASE
     environment:
       - POSTGRES_PASSWORD=PASS_DATABASE
@@ -18,12 +18,12 @@ services:
     command: entrypoint.sh
     container_name: NAME_PROJECT_JAVA
     depends_on:
-      - postgres
+      - db
     expose:
       - 99999
     image: "."
     links:
-      - postgres
+      - db
     network_mode: bridge
     ports:
       - "99999:8080"

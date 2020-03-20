@@ -63,9 +63,6 @@ read userDatabase
 echo 'Digite a senha do banco de dados: '
 read passDatabase
 
-echo 'Digite o host real do banco de dados: '
-read hostDatabase
-
 echo 'Digite a porta do banco de dados: '
 read portDatabase
 
@@ -82,7 +79,6 @@ PORT_JPROJECT=${portJProject}
 NAME_DATABASE=${nameDatabase}
 USER_DATABASE=${userDatabase}
 PASS_DATABASE=${passDatabase}
-HOST_DATABASE=${hostDatabase}
 PORT_DATABASE=${portDatabase}
 
 TYPE_PROFILE_SPRING=${typeProfileProperties}
@@ -107,7 +103,7 @@ sed -e "s|00000|$PORT_DATABASE|" -i docker-compose.yml
 sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
-sed -e "s|HOST_DATABASE|$HOST_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
+sed -e "s|HOST_DATABASE|db|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 
 sed -e "s|TYPE_PROFILE_SPRING|$TYPE_PROFILE_SPRING|" -i entrypoint.sh
