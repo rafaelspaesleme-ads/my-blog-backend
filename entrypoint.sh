@@ -1,5 +1,7 @@
 echo 'Criando tabelas do banco de dados... . . .  .  .  .    .'
 
+apt-get install maven
+
 mvn clean install
 
 sed -e "s|create|none|" -i src/main/resources/application-TYPE_PROFILE_SPRING.properties
