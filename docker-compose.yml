@@ -21,7 +21,9 @@ services:
       - db
     expose:
       - 99999
-    image: "."
+    build:
+      context: .
+      dockerfile: Dockerfile
     links:
       - db
     network_mode: bridge
