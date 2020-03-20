@@ -1,6 +1,6 @@
 echo 'Criando tabelas do banco de dados... . . .  .  .  .    .'
 
-apt-get install maven
+apt install maven
 
 mvn clean install
 
