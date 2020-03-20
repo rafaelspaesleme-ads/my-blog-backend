@@ -15,7 +15,7 @@ COPY . /app
 
 RUN chmod +x entrypoint.sh
 
-RUN bash -c 'entrypoint.sh'
+ENTRYPOINT ["/bin/bash", "-c", "entrypoint.sh"]
 
 COPY target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar app.jar
 
