@@ -97,12 +97,12 @@ sed -e "s|VERSION_PROJECT_JAVA|$VERSION_PROJECT_JAVA|" -i Dockerfile
 
 sed -e "s|dev|$PROFILE_ACTIVE|" -i src/main/resources/application.properties
 sed -e "s|IMAGE_POSTGRES|$IMAGE_POSTGRES|" -i docker-compose.yml
-sed -e "s|PORT_JPROJECT|$PORT_JPROJECT|" -i docker-compose.yml
+sed -e "s|99999|$PORT_JPROJECT|" -i docker-compose.yml
 
 sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i docker-compose.yml
 sed -e "s|USER_DATABASE|$USER_DATABASE|" -i docker-compose.yml
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i docker-compose.yml
-sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i docker-compose.yml
+sed -e "s|00000|$PORT_DATABASE|" -i docker-compose.yml
 
 sed -e "s|NAME_DATABASE|$NAME_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties

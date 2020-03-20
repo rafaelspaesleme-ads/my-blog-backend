@@ -8,7 +8,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
-      - "PORT_DATABASE:5432"
+      - 00000:5432
     environment:
       - POSTGRES_PASSWORD=PASS_DATABASE
       - POSTGRES_USER=USER_DATABASE
@@ -22,9 +22,9 @@ services:
     network_mode: bridge
     container_name: NAME_PROJECT_JAVA
     expose:
-      - PORT_JPROJECT
+      - 99999
     ports:
-      - PORT_JPROJECT:8080
+      - 99999:8080
     restart: unless-stopped
     depends_on:
       - postgres
