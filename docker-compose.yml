@@ -7,8 +7,6 @@ services:
     container_name: postgres
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    expose:
-      - PORT_DATABASE
     ports:
       - PORT_DATABASE:5432
     environment:
