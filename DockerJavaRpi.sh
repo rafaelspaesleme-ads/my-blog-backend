@@ -110,4 +110,9 @@ sed -e "s|TYPE_PROFILE_SPRING|$TYPE_PROFILE_SPRING|" -i entrypoint.sh
 
 cat docker-compose.yml
 
+echo 'Aperte enter para continuar: '
+read enter1
+
+cat Dockerfile
+
 bash execute-docker-compose.sh
