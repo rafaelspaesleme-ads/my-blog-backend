@@ -19,7 +19,7 @@ services:
     container_name: "NAME_PROJECT_JAVA"
     depends_on:
       - db
-    expose:
+    expose:clear
       - 99999
     build:
       context: .
