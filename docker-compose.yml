@@ -1,7 +1,7 @@
 ---
 services:
   db:
-    container_name: NAME_DATABASE
+    container_name: "NAME_DATABASE"
     environment:
       - POSTGRES_PASSWORD=PASS_DATABASE
       - POSTGRES_USER=USER_DATABASE
@@ -16,7 +16,7 @@ services:
   app:
     entrypoint: /bin/bash
     command: entrypoint.sh
-    container_name: NAME_PROJECT_JAVA
+    container_name: "NAME_PROJECT_JAVA"
     depends_on:
       - db
     expose:
