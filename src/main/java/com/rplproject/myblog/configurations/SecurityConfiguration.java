@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/api/blog/repositorio/buscar/ativo/true**",
     };
     private static final String[] PUBLIC_MATCHERS_POST ={
-            "/api/usrxk/realtime/cadastrar/**",
+            "/api/usrxk/usuario/realtime/save/**",
             "/api/auth/nova_senha/**"
     };
 

@@ -42,7 +42,7 @@ public class UsuariosResource {
     }
 
     @CrossOrigin
-    @PostMapping(value = "usuario/user/save")
+    @PostMapping(value = "usuario/realtime/save")
     public ResponseEntity<List<UsuariosDTO>> saveRealTime(@Valid @RequestBody UsuariosDTO usuariosDTO){
         UsuariosDTO usuarios = usuariosService.save(usuariosDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
