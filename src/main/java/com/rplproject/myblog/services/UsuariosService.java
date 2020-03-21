@@ -10,7 +10,9 @@ import com.rplproject.myblog.secutiry.UsuariosSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,25 +28,44 @@ public class UsuariosService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Optional<Usuarios> findById(Long id){
+    public Optional<UsuariosDTO> findById(Long id){
         UsuariosSecurity usuariosSecurity = UserService.authenticated();
         if (usuariosSecurity == null && !usuariosSecurity.hasRole(ProfileUserConfiguration.ROLE_ADMIN) && !id.equals(usuariosSecurity.getId())){
             throw new AuthorizationException("Acesso negado.");
         }
-        return usuariosRepository.findById(id);
+        return Optional.ofNullable(buildUsuariosDTO(Objects
+                .requireNonNull(usuariosRepository.findById(id)
+                        .orElse(null))));
     }
 
-    public List<Usuarios> findByUsuario(String usuario){
-        return usuariosRepository.findAllByUsuario(usuario);
+    public List<UsuariosDTO> findByUsuario(String usuario){
+        List<Usuarios> allByUsuario = usuariosRepository.findAllByUsuario(usuario);
+        List<UsuariosDTO> usuariosDTOS = new ArrayList<>();
+        allByUsuario.forEach(usuarios -> {
+            usuariosDTOS.add(buildUsuariosDTO(usuarios));
+        });
+        return usuariosDTOS;
     }
 
-    public List<Usuarios> findByContemUsuario(String usuario){
-        return usuariosRepository.findByContemUsuario(usuario);
+    public List<UsuariosDTO> findByContemUsuario(String usuario){
+        List<Usuarios> byContemUsuario = usuariosRepository.findByContemUsuario(usuario);
+        List<UsuariosDTO> usuariosDTOS = new ArrayList<>();
+        byContemUsuario.forEach(usuarios -> {
+            usuariosDTOS.add(buildUsuariosDTO(usuarios));
+        });
+        return usuariosDTOS;
     }
 
-    public Usuarios save(UsuariosDTO usuariosDTO){
+    public List<UsuariosDTO> findAll(){
+        List<UsuariosDTO> usuariosDTOS = new ArrayList<>();
+        usuariosRepository.findAll()
+                .forEach(usuarios -> usuariosDTOS.add(buildUsuariosDTO(usuarios)));
+        return usuariosDTOS;
+    }
+
+    public UsuariosDTO save(UsuariosDTO usuariosDTO){
         usuariosDTO.setId(null);
-        return usuariosRepository.save(buildUsuarios(usuariosDTO));
+        return buildUsuariosDTO(usuariosRepository.save(buildUsuarios(usuariosDTO)));
     }
 
     public Usuarios buildUsuarios(UsuariosDTO usuariosDTO){
@@ -64,7 +85,6 @@ public class UsuariosService {
                 .withId(usuarios.getId())
                 .withNome(usuarios.getNome())
                 .withUsuario(usuarios.getUsuario())
-                .withSenha(bCryptPasswordEncoder.encode(usuarios.getSenha()))
                 .withEmail(usuarios.getEmail())
                 .build();
     }
