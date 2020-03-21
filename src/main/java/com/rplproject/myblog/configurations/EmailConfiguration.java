@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
 public class EmailConfiguration {
     @Bean
     public EmailService emailService() {
-        return new SmtpEmailService(mailSender);
+        return new SmtpEmailService();
     }
 }
