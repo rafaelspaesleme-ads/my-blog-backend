@@ -44,7 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/api/blog/portfolio/buscar/ativo/true**",
             "/api/blog/postagem/buscar/ativo/true**",
             "/api/blog/repositorio/buscar/ativo/true**",
-            "/api/blog/artigo/buscar/:id"
+            "/api/blog/artigo/buscar/:id",
+            "/api/blog/postagem/buscar/:id"
     };
     private static final String[] PUBLIC_MATCHERS_POST ={
             "/api/usrxk/usuario/realtime/save/**",
