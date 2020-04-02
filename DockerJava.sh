@@ -24,6 +24,8 @@ imageDocker='openjdk:8-jdk-slim'
 
 imageDockerPostgre='rafaelspaesleme/imagedatabase:latest'
 
+mvn clean install -Dmaven.test.skip=true
+
 if [[ "$(docker images -q ${imageDocker} 2> /dev/null)" == "" ]]; then
   docker pull ${imageDocker}
 fi
