@@ -20,11 +20,9 @@ echo ''
 echo 'Configurando Dockerfile'
 echo ''
 
-echo 'Digite a imagem docker java para esse projeto: '
-read imageDocker
+imageDocker='openjdk:8-jdk-slim'
 
-echo 'Digite a imagem docker do banco de dados: '
-read imageDockerPostgre
+imageDockerPostgre='rafaelspaesleme/imagedatabase:latest'
 
 if [[ "$(docker images -q ${imageDocker} 2> /dev/null)" == "" ]]; then
   docker pull ${imageDocker}
