@@ -6,7 +6,7 @@ MAINTAINER USERNAME_DOCKER <MAIL_DOCKER>
 
 RUN mkdir /app
 
-COPY target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar /app
+COPY . /app
 
 WORKDIR /app
 
@@ -20,4 +20,4 @@ WORKDIR /app
 
 #CMD ["bash", "mvn clean install -Dmaven.test.skip=true"]
 
-CMD ["java","-jar","NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar"]
+CMD ["java","-jar","target/NAME_PROJECT_JAVA-VERSION_PROJECT_JAVA.jar"]
