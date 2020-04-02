@@ -20,10 +20,11 @@ echo ''
 echo 'Configurando Dockerfile'
 echo ''
 
-echo 'Digite a imagem docker RPI java para esse projeto: '
+echo 'Digite a imagem docker java para esse projeto: '
 read imageDocker
 
-imageDockerPostgre="tobi312/rpi-postgresql:9.6"
+echo 'Digite a imagem docker do banco de dados: '
+read imageDockerPostgre
 
 if [[ "$(docker images -q ${imageDocker} 2> /dev/null)" == "" ]]; then
   docker pull ${imageDocker}
