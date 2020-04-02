@@ -10,6 +10,9 @@ COPY . /app
 
 WORKDIR /app
 
+RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
+    && ln -s /usr/local/bin/docker-entrypoint.sh /
+
 CMD ["bash", "mvn clean install -Dmaven.test.skip=true"]
 
 CMD ["bash", "entrypoint.sh"]
