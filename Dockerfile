@@ -6,9 +6,9 @@ MAINTAINER USERNAME_DOCKER <MAIL_DOCKER>
 
 RUN mkdir /app
 
-COPY ~/my-blog-backend /app
+COPY . /app
 
-WORKDIR /app/my-blog-backend
+WORKDIR /app
 
 CMD ["bash", "mvn clean install -Dmaven.test.skip=true"]
 
