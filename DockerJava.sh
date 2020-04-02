@@ -28,11 +28,9 @@ if [[ "$(docker images -q ${imageDocker} 2> /dev/null)" == "" ]]; then
   docker pull ${imageDocker}
 fi
 
-echo 'Digite seu username Docker: '
-read usernameDocker
+usernameDocker='rafaelspaesleme'
 
-echo 'Digite seu email: '
-read mailDocker
+mailDocker='rafaelspaesleme.ads@gmail.com'
 
 echo 'Configurando projeto'
 echo ''
