@@ -63,6 +63,20 @@ read passDatabase
 echo 'Digite a porta do banco de dados: '
 read portDatabase
 
+echo 'Configurando security... . . . . . .  .   .    .      .'
+
+echo 'Jwt Secret: '
+read jwrSecurity
+
+echo 'Jwt Expiration: '
+read jwtExpiration
+
+echo 'Email destino: '
+read mailDestiny
+
+echo 'Password destino: '
+read passDestiny
+
 IMAGE_APP=${imageDocker}
 USERNAME_DOCKER=${usernameDocker}
 MAIL_DOCKER=${mailDocker}
@@ -79,6 +93,11 @@ PASS_DATABASE=${passDatabase}
 PORT_DATABASE=${portDatabase}
 
 TYPE_PROFILE_SPRING=${typeProfileProperties}
+
+SECURITY_JWT=${jwrSecurity}
+EXPIRATION_JWT=${jwtExpiration}
+DESTINY_MAIL=${mailDestiny}
+DESTINY_PASS=${passDestiny}
 
 sed -e "s|NAME_PROJECT_JAVA|$NAME_PROJECT_JAVA|" -i docker-compose.yml
 
@@ -102,6 +121,11 @@ sed -e "s|USER_DATABASE|$USER_DATABASE|" -i src/main/resources/application-${typ
 sed -e "s|PASS_DATABASE|$PASS_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|HOST_DATABASE|db|" -i src/main/resources/application-${typeProfileProperties}.properties
 sed -e "s|PORT_DATABASE|$PORT_DATABASE|" -i src/main/resources/application-${typeProfileProperties}.properties
+
+sed -e "s|SENHA_JWT|$SECURITY_JWT|" -i src/main/resources/application-${typeProfileProperties}.properties
+sed -e "s|TIME_EXPIRATION|$EXPIRATION_JWT|" -i src/main/resources/application-${typeProfileProperties}.properties
+sed -e "s|EMAIL_DESTIN|$DESTINY_MAIL|" -i src/main/resources/application-${typeProfileProperties}.properties
+sed -e "s|PASS_DESTIN|$DESTINY_PASS|" -i src/main/resources/application-${typeProfileProperties}.properties
 
 sed -e "s|TYPE_PROFILE_SPRING|$TYPE_PROFILE_SPRING|" -i entrypoint.sh
 
