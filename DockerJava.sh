@@ -107,7 +107,7 @@ sed -e "s|MAIL_DOCKER|$MAIL_DOCKER|" -i Dockerfile
 sed -e "s|NAME_PROJECT_JAVA|$NAME_PROJECT_JAVA|" -i Dockerfile
 sed -e "s|VERSION_PROJECT_JAVA|$VERSION_PROJECT_JAVA|" -i Dockerfile
 
-sed -e "s|dev|$PROFILE_ACTIVE|" -i src/main/resources/application.properties
+sed -e "s|test|$PROFILE_ACTIVE|" -i src/main/resources/application.properties
 sed -e "s|IMAGE_POSTGRES|$IMAGE_POSTGRES|" -i docker-compose.yml
 sed -e "s|99999|$PORT_JPROJECT|" -i docker-compose.yml
 
